@@ -4,6 +4,8 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://Michelprogram.github.io",
+  base: "/cat-sitting/",
   vite: {
     plugins: [tailwindcss()],
   },
