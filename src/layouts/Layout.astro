@@ -24,6 +24,15 @@ const currentLanguage = Astro.currentLocale as Language
 		<meta name="generator" content={Astro.generator} />
 		<title>{languages[currentLanguage].title}</title>
 	</head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NWQV82BKJX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-NWQV82BKJX');
+</script>
+	
 	<body class="flex min-h-full w-full justify-center bg-white">
 		<slot />
 	</body>
