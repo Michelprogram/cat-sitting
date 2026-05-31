@@ -1,6 +1,15 @@
 [tools]
 node = "latest"
 
+[hooks]
+postinstall = 'npx corepack enable'
+
+[settings]
+experimental = true
+
+[env]
+_.path = ['{{config_root}}/node_modules/.bin']
+
 [tasks.build]
 description = "Build the project"
 run = "pnpm run build"
