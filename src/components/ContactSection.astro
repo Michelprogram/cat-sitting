@@ -4,16 +4,21 @@ import mymyImg from "../assets/mymy.jpeg";
 import type { Language } from "../utils/i18n";
 import SectionTitle from "./SectionTitle.astro";
 
-const language: Record<Language, Record<string, string>> = {
+const language: Record<
+  Language,
+  { title: string; subtitle: string; description: string; or: string }
+> = {
   fr: {
     title: "Contact",
     subtitle: "Prêt(e) à réserver le séjour ou des questions ?",
     description: "Écrivez-moi à",
+    or: "ou sur Instagram",
   },
   en: {
     title: "Contact Me",
     subtitle: "Ready to book a stay or have questions?",
     description: "Email me at",
+    or: "or on Instagram",
   },
 };
 
@@ -30,6 +35,14 @@ const currentLanguage = Astro.currentLocale as Language;
       {language[currentLanguage].description}
       <a href="mailto:pawandronrons@gmail.com" class="font-bold underline"
         >pawandronrons@gmail.com</a
+      >
+      {language[currentLanguage].or}
+      <a
+        href={`https://www.instagram.com/mysticetshifou/`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="font-bold underline"
+        >@mysticetshifou</a
       >
     </p>
   </div>
