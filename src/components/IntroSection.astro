@@ -39,7 +39,7 @@ const currentLanguage = Astro.currentLocale as Language;
     {language[currentLanguage].section.map((section, index) => (
       <div
         class:list={[
-          " rounded-sm mb-[15px] bg-white p-[15px] text-[13px] leading-[1.4] shadow-xl",
+          " rounded-sm mb-[15px] bg-white p-[15px] leading-[1.4] shadow-xl text-lg",
           index % 2 === 0 ? "w-[90%] self-start" : "w-[95%] self-end",
         ]}
       >

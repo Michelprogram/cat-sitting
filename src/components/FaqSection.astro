@@ -101,7 +101,7 @@ const currentLanguage = Astro.currentLocale as Language;
     {
       language[currentLanguage].questions.map((question) => (
         <details class="group border-b border-[#374ff9]/20 py-3">
-          <summary class="flex cursor-pointer list-none items-center justify-between gap-3 text-[15px] font-bold [&::-webkit-details-marker]:hidden">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-3 text-lg font-bold [&::-webkit-details-marker]:hidden">
             <span>{question.subtitle}</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -115,7 +115,7 @@ const currentLanguage = Astro.currentLocale as Language;
           </summary>
           <div class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out group-open:grid-rows-[1fr]">
             <div class="overflow-hidden">
-              <p class="pt-2 text-[12px] leading-[1.4]">{question.description}</p>
+              <p class="pt-2 text-lg leading-[1.4]">{question.description}</p>
             </div>
           </div>
         </details>
