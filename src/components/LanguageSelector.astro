@@ -9,9 +9,9 @@ const currentLanguage = Astro.currentLocale as Language;
     Object.entries(languages).map(([lang, label]) => (
       <li>
         <a
-          href={lang === "en" ? "/" : `/${lang}/`}
+          href={lang === "en" ? "/cat-sitting/" : `/cat-sitting/${lang}/`}
           class:list={[
-            "text-[12px] font-bold",
+            "text-lg font-bold",
             currentLanguage === lang && "underline underline-offset-4",
           ]}
         >
