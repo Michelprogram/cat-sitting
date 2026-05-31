@@ -1,0 +1,47 @@
+---
+import type { Language } from "../utils/i18n";
+import SectionTitle from "./SectionTitle.astro";
+
+const language: Record<Language, { title: string; subtitle: string }> = {
+  fr: {
+    title: "Disponibilités",
+    subtitle:
+      "Consultez les créneaux déjà réservés et choisissez le moment qui vous convient.",
+  },
+  en: {
+    title: "Availability",
+    subtitle:
+      "Check the slots that are already booked and pick a time that works for you.",
+  },
+};
+
+const currentLanguage = Astro.currentLocale as Language;
+const { title, subtitle } = language[currentLanguage];
+
+const calendarSrc =
+  "https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FToronto&showPrint=0&showTabs=0&showCalendars=0&mode=WEEK&showDate=0&title&showTz=0&showTitle=0&src=cGF3YW5kcm9ucm9uc0BnbWFpbC5jb20&color=%23039be5";
+---
+
+<section>
+  <div class="px-5">
+    <SectionTitle>{title}</SectionTitle>
+
+    <p class="mb-3 text-[12px] leading-[1.4] opacity-70">{subtitle}</p>
+  </div>
+
+  <div class="px-2">
+    <div
+      class="relative w-full overflow-hidden rounded-xl border border-[#374ff9]/15 bg-white"
+      style="aspect-ratio: 4 / 3;"
+    >
+      <iframe
+        src={calendarSrc}
+        title={title}
+        loading="lazy"
+        class="absolute inset-0 h-full w-full"
+        style="border-width: 0;"
+        frameborder="0"
+        scrolling="no"></iframe>
+    </div>
+  </div>
+</section>

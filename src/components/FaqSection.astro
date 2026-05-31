@@ -19,14 +19,14 @@ const language: Record<Language, i18nFaq> = {
         description: "Je me déplace dans tout le quartier de Griffintown.",
       },
       {
-        subtitle: "Comment cela se passe ?",
+        subtitle: "Comment réserver une visite ?",
         description:
-          "On s'organise un rendez-vous pour faire connaissance avec vous (pawrent) et votre chat avant le début des visites afin d'avoir les informations nécessaires (si il y a des allergies, antécédents médicaux, etc). Ainsi que vous me passiez un de vos double de clefs.",
+          "1 - Vous me contactez pour discuter de vos besoins et de votre chat (mail/instagram).<br><br>2 - Organisation d'un rendez-vous en presentiel pour echanger (contrat, passage des cles).",
       },
       {
         subtitle: "Comment se déroule une visite ?",
         description:
-          "Je m'occupe d'abord de la litière, puis des zones d'alimentations (nettoyage et remplissage), petit ménage puis interactions avec le chat s'il le souhaite (jeux, caresses, brossage, donner des friandises).",
+          "Je m'occupe d'abord de la litière, puis des zones d'alimentation et d'hydratation (nettoyage et remplissage), petit ménage puis interactions avec le chat s'il le souhaite (jeux, caresses, brossage, donner des friandises).",
       },
       {
         subtitle: "Aurais-je des nouvelles de mon chat ?",
@@ -48,6 +48,14 @@ const language: Record<Language, i18nFaq> = {
         description:
           "Je ne propose pas ce service. Je vous laisse le soin de le faire avant votre départ. Pour la sécurité de votre chat et la mienne. Je préfère limiter les moments de stress de votre chat lors de ma visite.",
       },
+      {
+        subtitle: "Comment annuler une visite ?",
+        description: "Toute annulation doit être faite au moins 24 heures avant la visite. Sinon, la visite sera facturée.",
+      },
+      {
+        subtitle: "Est-il possible de demander un devis ?",
+        description: "Oui, contactez-moi par mail ou instagram pour discuter de vos besoins et de votre chat."
+      }
     ],
   },
   en: {
@@ -58,14 +66,14 @@ const language: Record<Language, i18nFaq> = {
         description: "I travel throughout the Griffintown neighborhood.",
       },
       {
-        subtitle: "How does it work?",
+        subtitle: "How to book a visit?",
         description:
-          "We will arrange a meeting to get to know you (the pawrent) and your cat before the visits begin. This allows me to gather necessary details (allergies, medical history, etc.) and collect a spare set of keys.",
+          "1 - You contact me to discuss your needs and your cat (mail/instagram).<br><br>2 - Organization of a meeting in person to exchange (contract, keys pass).",
       },
       {
         subtitle: "What does a visit look like?",
         description:
-          "I first take care of the litter box, then the feeding areas (cleaning and refilling), do a quick tidy-up, and interact with your cat if they wish (playtime, cuddles, brushing, treats).",
+          "I first take care of the litter box, then the feeding areas and water areas (cleaning and refilling), do a quick tidy-up, and interact with your cat if they wish (playtime, cuddles, brushing, treats).",
       },
       {
         subtitle: "Will I get updates about my cat?",
@@ -86,6 +94,10 @@ const language: Record<Language, i18nFaq> = {
         subtitle: "Can you trim my cat's claws?",
         description:
           "I do not offer this service. Please take care of it before you leave. For your cat's safety and mine, I prefer to minimize stressful moments for your cat during my visits.",
+      },
+      {
+        subtitle: "How do I cancel a visit?",
+        description: "All cancellations must be made at least 24 hours before the visit. Otherwise, the visit will be charged.",
       },
     ],
   },
@@ -115,7 +127,7 @@ const currentLanguage = Astro.currentLocale as Language;
           </summary>
           <div class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out group-open:grid-rows-[1fr]">
             <div class="overflow-hidden">
-              <p class="pt-2 text-lg leading-[1.4]">{question.description}</p>
+              <p class="pt-2 text-lg leading-[1.4]" set:html={question.description} />
             </div>
           </div>
         </details>

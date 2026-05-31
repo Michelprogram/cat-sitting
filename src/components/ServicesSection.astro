@@ -30,7 +30,7 @@ const language: Record<Language, i18nServices> = {
       },
       {
         title: "Les petits plus",
-        description: "L'arrosage des plantes et des petits conseils si besoin",
+        description: "L'arrosage des plantes et des petits conseils.",
       },
     ],
   },
@@ -53,8 +53,7 @@ const language: Record<Language, i18nServices> = {
       },
       {
         title: "Add",
-        description:
-          "Water bowls are cleaned daily and refilled as needed. Water fountains are maintained every 2-3 days depending on their condition.",
+        description: "Watering the plants and small tips.",
       },
     ],
   },
@@ -84,8 +83,8 @@ const currentLanguage = Astro.currentLocale as Language;
               alignments[index],
             ]}
           >
-            <h3 class="mb-1 text-lg font-medium">{service.title}</h3>
-            <p class="text-base leading-[1.3]">{service.description}</p>
+            <h3 class="mb-1 text-lg font-bold text-center">{service.title}</h3>
+            <p class="text-base leading-[1.3] text-center">{service.description}</p>
           </div>
         );
       })

@@ -13,10 +13,10 @@ type Props = {
 };
 
 const {
-  count = 18,
+  count = 38,
   startPercent = 4,
   endPercent = 98,
-  amplitude = 32,
+  amplitude = 25,
   waves = 10,
 } = Astro.props;
 
@@ -60,9 +60,9 @@ const paws = Array.from({ length: count }, (_, i) => {
 
   .paw {
     position: absolute;
-    width: 44px;
-    height: 44px;
-    fill: #374ff9;
+    width: 25px;
+    height: 25px;
+    fill: #3047f1;
     opacity: 0;
     transform: translate(-50%, -50%) rotate(var(--paw-tilt, 0deg)) scale(0.55);
     transform-origin: center;
@@ -73,7 +73,7 @@ const paws = Array.from({ length: count }, (_, i) => {
   }
 
   .paw[data-visible="true"] {
-    opacity: 0.16;
+    opacity: 0.36;
     transform: translate(-50%, -50%) rotate(var(--paw-tilt, 0deg)) scale(1);
   }
 

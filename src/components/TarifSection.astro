@@ -1,0 +1,96 @@
+---
+import type { Language } from "../utils/i18n";
+import SectionTitle from "./SectionTitle.astro";
+
+type Tarif = {
+  title: string;
+  price: string;
+  unit: string;
+  description: string;
+  highlight?: boolean;
+};
+
+type i18nTarifs = {
+  title: string;
+  note: string;
+  tarifs: Tarif[];
+};
+
+const language: Record<Language, i18nTarifs> = {
+  fr: {
+    title: "Tarifs",
+    note: "Tarifs indicatifs sur Griffintown. Un devis personnalisé est établi lors de la rencontre.",
+    tarifs: [
+      {
+        title: "Visite simple",
+        price: "20 $",
+        unit: "/ visite",
+        description:
+          "Une visite quotidienne de <strong>30 minutes</strong> : litière, alimentation, hydratation et un moment d'attention.",
+      },
+      {
+        title: "Visite prolongée",
+        price: "30 $",
+        unit: "/ visite",
+        description:
+          "Une visite d'une <strong>1 heure</strong> : litière, alimentation, hydratation, pour les chats qui demandent plus de présence, jeux et câlins.",
+        highlight: true,
+      },
+    ],
+  },
+  en: {
+    title: "Pricing",
+    note: "Indicative rates within Griffintown. A tailored quote is provided during our first meeting.",
+    tarifs: [
+      {
+        title: "Standard visit",
+        price: "$20",
+        unit: "/ visit",
+        description:
+          "A daily visit of <strong>30 minutes</strong>: litter, food, water and a moment of attention.",
+      },
+      {
+        title: "Extended visit",
+        price: "$30",
+        unit: "/ visit",
+        description:
+          "A visit of <strong>1 hour</strong> : litter, food, water, for cats who need more presence, playtime and cuddles.",
+        highlight: true,
+      },
+    ],
+  },
+};
+
+const currentLanguage = Astro.currentLocale as Language;
+const { title, note, tarifs } = language[currentLanguage];
+---
+
+<section class="px-5 pb-5">
+  <SectionTitle>{title}</SectionTitle>
+
+  <div class="flex flex-col gap-3">
+    {
+      tarifs.map((tarif) => (
+        <div
+          class:list={[
+            "flex items-baseline justify-between gap-4 rounded-xl border bg-white p-4 shadow-[0_4px_16px_rgba(0,0,0,0.08)]",
+            tarif.highlight
+              ? "border-[#374ff9]/60 ring-1 ring-[#374ff9]/40"
+              : "border-[#374ff9]/15",
+          ]}
+        >
+          <div class="min-w-0 flex-1">
+            <h3 class="mb-1 text-[15px] font-bold">{tarif.title}</h3>
+            <p class="text-[12px] leading-[1.4]" set:html={tarif.description} />
+          </div>
+          <div class="shrink-0 text-right">
+            <div class="text-[22px] leading-none font-bold">{tarif.price}</div>
+            <div class="mt-1 text-[11px] opacity-70">{tarif.unit}</div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  <p class="mt-3 text-[11px] leading-[1.4] opacity-70">{note}</p>
+</section>
