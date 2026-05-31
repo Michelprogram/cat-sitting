@@ -1,0 +1,37 @@
+name: Publish
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v6
+
+      - name: Install mise
+        uses: jdx/mise-action@v3
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run build
+        run: mise build
+    
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v5
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          clean: true
+          branch: gh-pages
+          folder: dist

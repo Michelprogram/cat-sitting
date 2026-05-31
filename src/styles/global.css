@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+@layer base {
+	body {
+		font-family: "Georgia", "Times New Roman", serif;
+		color: #374ff9;
+	}
+
+	.lang-en {
+		display: none;
+	}
+
+	body.en .lang-fr {
+		display: none;
+	}
+
+	body.en .lang-en {
+		display: block;
+	}
+
+	.lang-btn-fr {
+		color: #374ff9;
+	}
+
+	.lang-btn-en {
+		color: #000000;
+	}
+
+	body.en .lang-btn-fr {
+		color: #000000;
+	}
+
+	body.en .lang-btn-en {
+		color: #374ff9;
+	}
+}

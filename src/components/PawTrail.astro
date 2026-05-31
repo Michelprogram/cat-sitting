@@ -1,0 +1,143 @@
+---
+type Props = {
+  /** Total number of paw prints in the trail. */
+  count?: number;
+  /** Where the trail starts, as a percentage of its container height. */
+  startPercent?: number;
+  /** Where the trail ends, as a percentage of its container height. */
+  endPercent?: number;
+  /** Horizontal amplitude of the zigzag (percentage from the center). */
+  amplitude?: number;
+  /** Number of full sine waves the trail performs across its height. */
+  waves?: number;
+};
+
+const {
+  count = 18,
+  startPercent = 4,
+  endPercent = 98,
+  amplitude = 32,
+  waves = 10,
+} = Astro.props;
+
+const PAW_PATH =
+  "M298.5 156.9C312.8 199.8 298.2 243.1 265.9 253.7C233.6 264.3 195.8 238.1 181.5 195.2C167.2 152.3 181.8 109 214.1 98.4C246.4 87.8 284.2 114 298.5 156.9zM164.4 262.6C183.3 295 178.7 332.7 154.2 346.7C129.7 360.7 94.5 345.8 75.7 313.4C56.9 281 61.4 243.3 85.9 229.3C110.4 215.3 145.6 230.2 164.4 262.6zM133.2 465.2C185.6 323.9 278.7 288 320 288C361.3 288 454.4 323.9 506.8 465.2C510.4 474.9 512 485.3 512 495.7L512 497.3C512 523.1 491.1 544 465.3 544C453.8 544 442.4 542.6 431.3 539.8L343.3 517.8C328 514 312 514 296.7 517.8L208.7 539.8C197.6 542.6 186.2 544 174.7 544C148.9 544 128 523.1 128 497.3L128 495.7C128 485.3 129.6 474.9 133.2 465.2zM485.8 346.7C461.3 332.7 456.7 295 475.6 262.6C494.5 230.2 529.6 215.3 554.1 229.3C578.6 243.3 583.2 281 564.3 313.4C545.4 345.8 510.3 360.7 485.8 346.7zM374.1 253.7C341.8 243.1 327.2 199.8 341.5 156.9C355.8 114 393.6 87.8 425.9 98.4C458.2 109 472.8 152.3 458.5 195.2C444.2 238.1 406.4 264.3 374.1 253.7z";
+
+const paws = Array.from({ length: count }, (_, i) => {
+  const progress = count === 1 ? 0 : i / (count - 1);
+  const topPercent = startPercent + progress * (endPercent - startPercent);
+  const wave = Math.sin(progress * Math.PI * waves);
+  const leftPercent = 50 + wave * amplitude;
+  const tilt = wave * 22 + (i % 2 === 0 ? -6 : 6);
+  return { topPercent, leftPercent, tilt };
+});
+---
+
+<div class="paw-trail" aria-hidden="true">
+  {
+    paws.map(({ topPercent, leftPercent, tilt }) => (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 640 640"
+        class="paw"
+        data-top-percent={topPercent}
+        style={`top: ${topPercent}%; left: ${leftPercent}%; --paw-tilt: ${tilt}deg;`}
+      >
+        <path d={PAW_PATH} />
+      </svg>
+    ))
+  }
+</div>
+
+<style>
+  .paw-trail {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: -1;
+  }
+
+  .paw {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    fill: #374ff9;
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--paw-tilt, 0deg)) scale(0.55);
+    transform-origin: center;
+    transition:
+      opacity 600ms ease-out,
+      transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: opacity, transform;
+  }
+
+  .paw[data-visible="true"] {
+    opacity: 0.16;
+    transform: translate(-50%, -50%) rotate(var(--paw-tilt, 0deg)) scale(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .paw {
+      transition: opacity 200ms ease-out;
+      transform: translate(-50%, -50%) rotate(var(--paw-tilt, 0deg));
+    }
+    .paw[data-visible="true"] {
+      transform: translate(-50%, -50%) rotate(var(--paw-tilt, 0deg));
+    }
+  }
+</style>
+
+<script>
+  const trail = document.querySelector<HTMLElement>(".paw-trail");
+  const paws = document.querySelectorAll<SVGElement>(".paw-trail .paw");
+
+  // Convert each paw's percentage-based `top` into a fixed pixel offset based
+  // on the trail's current height. After this runs, opening/closing a FAQ
+  // (or anything else that grows the page) won't reflow the paws.
+  function freezePawPositions() {
+    if (!trail) return;
+    const height = trail.offsetHeight;
+    if (height === 0) return;
+    paws.forEach((paw) => {
+      const topPercent = parseFloat(paw.dataset.topPercent ?? "0");
+      paw.style.top = `${(topPercent / 100) * height}px`;
+    });
+  }
+
+  if (paws.length > 0 && trail) {
+    freezePawPositions();
+    // Re-snapshot once images/fonts have settled, then again on real viewport
+    // resizes only (not on layout shifts from opening accordions).
+    window.addEventListener("load", freezePawPositions, { once: true });
+    window.addEventListener("resize", freezePawPositions);
+  }
+
+  if (paws.length === 0) {
+    // Nothing to do.
+  } else if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.setAttribute("data-visible", "true");
+          } else {
+            entry.target.removeAttribute("data-visible");
+          }
+        }
+      },
+      {
+        // Shrink the observation area so paws only "light up" once they're
+        // well inside the viewport: top shrink keeps them visible a bit
+        // longer when scrolling up, bottom shrink delays their entrance so
+        // the user has to scroll further before a new paw appears.
+        rootMargin: "-15% 0px -35% 0px",
+        threshold: 0,
+      },
+    );
+
+    paws.forEach((paw) => observer.observe(paw));
+  } else {
+    paws.forEach((paw) => paw.setAttribute("data-visible", "true"));
+  }
+</script>

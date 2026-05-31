@@ -1,0 +1,20 @@
+---
+import ContactSection from "../../components/ContactSection.astro";
+import FaqSection from "../../components/FaqSection.astro";
+import IntroSection from "../../components/IntroSection.astro";
+import PawTrail from "../../components/PawTrail.astro";
+import ServicesSection from "../../components/ServicesSection.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout>
+  <div class="relative isolate min-h-full w-full">
+    <PawTrail />
+    <SiteHeader />
+    <IntroSection />
+    <ServicesSection />
+    <FaqSection />
+    <ContactSection />
+  </div>
+</Layout>

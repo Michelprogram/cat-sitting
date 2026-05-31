@@ -1,0 +1,18 @@
+---
+interface Props {
+  marginTop?: boolean;
+  class?: string;
+}
+
+const { marginTop = true, class: className } = Astro.props;
+---
+
+<h2
+  class:list={[
+    marginTop && "mt-5",
+    "mb-[25px] text-[32px] leading-[1.1] font-bold",
+    className,
+  ]}
+>
+  <slot />
+</h2>

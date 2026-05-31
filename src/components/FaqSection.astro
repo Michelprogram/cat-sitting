@@ -1,0 +1,125 @@
+---
+import type { Language } from "../utils/i18n";
+import SectionTitle from "./SectionTitle.astro";
+
+type i18nFaq = {
+  title: string;
+  questions: {
+    subtitle: string;
+    description: string;
+  }[];
+};
+
+const language: Record<Language, i18nFaq> = {
+  fr: {
+    title: "Quelques questions",
+    questions: [
+      {
+        subtitle: "Quelle est votre zone d'intervention ?",
+        description: "Je me déplace dans tout le quartier de Griffintown.",
+      },
+      {
+        subtitle: "Comment cela se passe ?",
+        description:
+          "On s'organise un rendez-vous pour faire connaissance avec vous (pawrent) et votre chat avant le début des visites afin d'avoir les informations nécessaires (si il y a des allergies, antécédents médicaux, etc). Ainsi que vous me passiez un de vos double de clefs.",
+      },
+      {
+        subtitle: "Comment se déroule une visite ?",
+        description:
+          "Je m'occupe d'abord de la litière, puis des zones d'alimentations (nettoyage et remplissage), petit ménage puis interactions avec le chat s'il le souhaite (jeux, caresses, brossage, donner des friandises).",
+      },
+      {
+        subtitle: "Aurais-je des nouvelles de mon chat ?",
+        description:
+          "Oui, la communication est importante. Vous aurez des photos et un petit message à chaque visite.",
+      },
+      {
+        subtitle: "Si mon chat tombe malade, comment cela se passe ?",
+        description:
+          "Je m'organise avec vous pour l'emmener chez son vétérinaire. Les frais de vétérinaire et de déplacement seront avancés mais à votre charge (je vous enverrais la facture qui sera à régler).",
+      },
+      {
+        subtitle: "Si mon chat a un traitement, comment cela se passe ?",
+        description:
+          "Je m'occupe des administrations de médicaments oraux mais non cutané (piqûres). Il me faudra l'ordonnance datée à l'appui.",
+      },
+      {
+        subtitle: "Pouvez-vous couper les griffes de mon chat ?",
+        description:
+          "Je ne propose pas ce service. Je vous laisse le soin de le faire avant votre départ. Pour la sécurité de votre chat et la mienne. Je préfère limiter les moments de stress de votre chat lors de ma visite.",
+      },
+    ],
+  },
+  en: {
+    title: "Common Questions",
+    questions: [
+      {
+        subtitle: "What areas do you cover?",
+        description: "I travel throughout the Griffintown neighborhood.",
+      },
+      {
+        subtitle: "How does it work?",
+        description:
+          "We will arrange a meeting to get to know you (the pawrent) and your cat before the visits begin. This allows me to gather necessary details (allergies, medical history, etc.) and collect a spare set of keys.",
+      },
+      {
+        subtitle: "What does a visit look like?",
+        description:
+          "I first take care of the litter box, then the feeding areas (cleaning and refilling), do a quick tidy-up, and interact with your cat if they wish (playtime, cuddles, brushing, treats).",
+      },
+      {
+        subtitle: "Will I get updates about my cat?",
+        description:
+          "Yes, communication is key. You will receive photos and a quick update message during every visit.",
+      },
+      {
+        subtitle: "What happens if my cat gets sick?",
+        description:
+          "I will coordinate with you to take them to their vet. Veterinary and travel expenses will be advanced but are your responsibility (I will send you the invoice for reimbursement).",
+      },
+      {
+        subtitle: "What happens if my cat needs medication?",
+        description:
+          "I handle oral medication administration but not injections. I will need a copy of a dated prescription.",
+      },
+      {
+        subtitle: "Can you trim my cat's claws?",
+        description:
+          "I do not offer this service. Please take care of it before you leave. For your cat's safety and mine, I prefer to minimize stressful moments for your cat during my visits.",
+      },
+    ],
+  },
+};
+
+const currentLanguage = Astro.currentLocale as Language;
+---
+
+<section class="mt-[5px] pr-5 pb-2.5 pl-2.5">
+  <SectionTitle>{language[currentLanguage].title}</SectionTitle>
+
+  <div class="flex flex-col gap-2.5">
+    {
+      language[currentLanguage].questions.map((question) => (
+        <details class="group border-b border-[#374ff9]/20 py-3">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-3 text-[15px] font-bold [&::-webkit-details-marker]:hidden">
+            <span>{question.subtitle}</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 640 640"
+              fill="currentColor"
+              aria-hidden="true"
+              class="h-4 w-4 shrink-0 transition-transform duration-300 group-open:rotate-180"
+            >
+              <path d="M300.3 440.8C312.9 451 331.4 450.3 343.1 438.6L471.1 310.6C480.3 301.4 483 287.7 478 275.7C473 263.7 461.4 256 448.5 256L192.5 256C179.6 256 167.9 263.8 162.9 275.8C157.9 287.8 160.7 301.5 169.9 310.6L297.9 438.6L300.3 440.8z" />
+            </svg>
+          </summary>
+          <div class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out group-open:grid-rows-[1fr]">
+            <div class="overflow-hidden">
+              <p class="pt-2 text-[12px] leading-[1.4]">{question.description}</p>
+            </div>
+          </div>
+        </details>
+      ))
+    }
+  </div>
+</section>

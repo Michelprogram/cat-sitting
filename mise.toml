@@ -1,0 +1,6 @@
+[tools]
+node = "latest"
+
+[tasks.build]
+description = "Build the project"
+run = "pnpm run build"

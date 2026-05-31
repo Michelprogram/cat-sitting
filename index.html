@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paw & Ronrons - Cat-Sitting</title>
+    <style>
+        /* --- Styles de base --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            color: #374FF9;
+        }
+        body {
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+        }
+        /* Conteneur principal qui imite la taille d'un téléphone */
+        .mobile-container {
+            width: 100%;
+            max-width: 414px;
+            background-color: #ffffff;
+            min-height: 100vh;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            position: relative;
+        }
+        /* --- En-tête --- */
+        header {
+            text-align: center;
+            padding: 80px 20px 20px;
+            position: relative;
+        }
+        .logo-container {
+            position: absolute;
+            top: 10px;
+            left: -30px;
+        }
+        .logo-img {
+            height: 50px;
+        }
+        h1 {
+            font-size: 26px;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+        .subtitle {
+            font-size: 15px;
+            font-style: italic;
+        }
+        
+        /* --- Style du bouton de langue --- */
+        .lang-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #000000; /* Couleur du slash / */
+            cursor: pointer;
+        }
+        /* Par défaut : FR est bleu, ANG est noir */
+        .lang-btn-fr { color: #374FF9; }
+        .lang-btn-en { color: #000000; }
+
+        /* Quand la page passe en anglais : FR devient noir, ANG devient bleu */
+        body.en .lang-btn-fr { color: #000000; }
+        body.en .lang-btn-en { color: #374FF9; }
+
+        /* --- Section Introduction --- */
+        .intro-section {
+            padding: 0 20px 20px;
+        }
+        .hero-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        .text-blocks {
+            position: relative;
+            z-index: 2;
+            margin-top: 10px;
+        }
+        .text-box {
+            background-color: #ffffff;
+            padding: 15px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            line-height: 1.4;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        /* Décalage des boîtes de texte */
+        .text-box:nth-child(1), .text-box:nth-child(2) {
+            width: 90%;
+            margin-left: 0;
+        }
+        .text-box:nth-child(3), .text-box:nth-child(4) {
+            width: 95%;
+            margin-left: auto;
+        }
+        .text-box:nth-child(5), .text-box:nth-child(6) {
+            width: 90%;
+            margin-left: 0;
+        }
+
+        /* --- Section Services --- */
+        .services-section {
+            background-color: #ffffff;
+            padding: 30px 20px 10px 10px;
+            margin-top: -20px;
+        }
+        .services-section h2 {
+            font-size: 32px;
+            line-height: 1.1;
+            margin-bottom: 25px;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .service-item h3 {
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+        .service-item p {
+            font-size: 12px;
+        }
+        .service-hydration {
+            grid-column: 1 / 2;
+        }
+        /* --- Recadrage de l'image de Shifou par le haut --- */
+        .cats-showcase {
+            display: block;
+            margin: 20px auto 0;
+            width: 100%;
+            height: 340px;
+            overflow: hidden;
+            border-radius: 15px;
+            position: relative;
+    
+        }
+        .shifou-img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center; /* Garde le bas, coupe le haut */
+        }
+        /* Style FAQ */
+        .faq-section {
+            padding: 0 20px 10px 10px;
+            margin-top: 5px;
+        }
+        .faq-section h2 {
+            margin-bottom: 20px;
+        }
+        .faq-item {
+            margin-bottom: 20px;
+        }
+        .faq-item h3 {
+            font-size: 15px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .faq-item p {
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        /* --- Section Contact --- */
+        .contact-section {
+            padding: 50px 20px 40px 10px;
+        }
+        .contact-section h2 {
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        .contact-link {
+            text-decoration: underline;
+            font-weight: bold;
+        }
+
+        /* --- Système de Traduction --- */
+        .lang-en {
+            display: none; /* Cache l'anglais par défaut */
+        }
+        body.en .lang-fr {
+            display: none; /* Cache le français quand l'anglais est actif */
+        }
+        body.en .lang-en {
+            display: block; /* Montre l'anglais quand l'anglais est actif */
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-container">
+        <header>
+            <div class="lang-toggle"><span class="lang-btn-fr">FR</span>/<span class="lang-btn-en">ANG</span></div>
+            <div class="logo-container">
+                <img src="logo.png" alt="Logo Paw & Ronrons" class="logo-img">
+            </div>
+            <h1>Paw & Ronrons</h1>
+            <p class="subtitle lang-fr">Cat-sitting à domicile</p>
+            <p class="subtitle lang-en">In-home cat-sitting</p>
+        </header>
+
+        <section class="intro-section">
+            <img src="major.jpeg" alt="Lucie avec son chat" class="hero-img">
+            <div class="text-blocks">
+                <div class="text-box lang-fr">
+                    Hi! Je m'appelle Lucie, je suis cat-sitter. J'ai acquis en France mon diplôme de l'ACACED et ma formation de comportementaliste félin.
+                </div>
+                <div class="text-box lang-en">
+                    Hi! My name is Lucie, I am a cat-sitter. I obtained my ACACED certificate and my feline behaviorist training in France.
+                </div>
+                <div class="text-box lang-fr">
+                    Que vous partiez en week-end ou en vacances, je vous propose mes services de cat-sitting pour prendre soin de vos compagnons directement dans leur environnement, là où ils se sentent le mieux.
+                </div>
+                <div class="text-box lang-en">
+                    Whether you are going away for a weekend or a vacation, I offer my cat-sitting services to take care of your companions directly in their own environment, where they feel best.
+                </div>
+                <div class="text-box lang-fr">
+                    Grâce à mes différentes expériences professionnelles auprès d'eux (hôtel félin-pension féline, association, étude de cas) je sais m'occuper d'eux et adapter mon comportement face aux différents profils.
+                </div>
+                <div class="text-box lang-en">
+                    Thanks to my various professional experiences with them (cat hotel/boarding, shelters, case studies), I know how to care for them and adapt my behavior to different personalities.
+                </div>
+            </div>
+        </section>
+
+        <section class="services-section">
+            <h2 class="lang-fr">Mes missions</h2>
+            <h2 class="lang-en">My services</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <h3 class="lang-fr">L'alimentation</h3>
+                    <h3 class="lang-en">Feeding</h3>
+                    <p class="lang-fr">Les bols de nourritures sont nettoyées puis remplis en fonction du dosage demandé (croquettes et patées).</p>
+                    <p class="lang-en">Food bowls are cleaned and refilled according to the requested portions (kibble and wet food).</p>
+                </div>
+                <div class="service-item">
+                    <h3 class="lang-fr">La litière</h3>
+                    <h3 class="lang-en">Litter box</h3>
+                    <p class="lang-fr">A chaque visite, la litière est nettoyée.</p>
+                    <p class="lang-en">The litter box is cleaned during every visit.</p>
+                </div>
+                <div class="service-item service-hydration">
+                    <h3 class="lang-fr">L'hydratation</h3>
+                    <h3 class="lang-en">Hydration</h3>
+                    <p class="lang-fr">Les bols d'eau sont nettoyés chaque jour et remplis en fonction des besoins. Les fontaines à eau tous les 2-3 jours selon leur état.</p>
+                    <p class="lang-en">Water bowls are cleaned daily and refilled as needed. Water fountains are maintained every 2-3 days depending on their condition.</p>
+                </div>
+                 <div class="service-item service-hydration">
+                    <h3 class="lang-fr">Les petits plus</h3>
+                    <h3 class="lang-en">Add</h3>
+                    <p class="lang-fr">L'arrosage des plantes et des petits conseils si besoin</p>
+                    <p class="lang-en">Water bowls are cleaned daily and refilled as needed. Water fountains are maintained every 2-3 days depending on their condition.</p>
+                </div>
+            </div>
+            <div class="cats-showcase">
+                <img src="shifou.jpeg" alt="Mon chat shifou qui pose" class="shifou-img">
+            </div>
+        </section>
+
+        <section class="faq-section">
+            <h2 class="lang-fr">Quelques questions</h2>
+            <h2 class="lang-en">Common Questions</h2>
+
+            <div class="faq-item">
+                <h3 class="lang-fr">Quelle est votre zone d'intervention ?</h3>
+                <h3 class="lang-en">What areas do you cover?</h3>
+                <p class="lang-fr">Je me déplace dans tout le quartier de Griffintown.</p>
+                <p class="lang-en">I travel throughout the Griffintown neighborhood.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="lang-fr">Comment cela se passe ?</h3>
+                <h3 class="lang-en">How does it work?</h3>
+                <p class="lang-fr">On s'organise un rendez-vous pour faire connaissance avec vous (pawrent) et votre chat avant le début des visites afin d'avoir les informations nécessaires (si il y a des allergies, antécédents médicaux, etc). Ainsi que vous me passiez un de vos double de clefs.</p>
+                <p class="lang-en">We will arrange a meeting to get to know you (the pawrent) and your cat before the visits begin. This allows me to gather necessary details (allergies, medical history, etc.) and collect a spare set of keys.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="lang-fr">Comment se déroule une visite ?</h3>
+                <h3 class="lang-en">What does a visit look like?</h3>
+                <p class="lang-fr">Je m'occupe d'abord de la litière, puis des zones d'alimentations (nettoyage et remplissage), petit ménage puis interactions avec le chat s'il le souhaite (jeux, caresses, brossage, donner des friandises).</p>
+                <p class="lang-en">I first take care of the litter box, then the feeding areas (cleaning and refilling), do a quick tidy-up, and interact with your cat if they wish (playtime, cuddles, brushing, treats).</p>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="lang-fr">Aurais-je des nouvelles de mon chat ?</h3>
+                <h3 class="lang-en">Will I get updates about my cat?</h3>
+                <p class="lang-fr">Oui, la communication est importante. Vous aurez des photos et un petit message à chaque visite.</p>
+                <p class="lang-en">Yes, communication is key. You will receive photos and a quick update message during every visit.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="lang-fr">Si mon chat tombe malade, comment cela se passe ?</h3>
+                <h3 class="lang-en">What happens if my cat gets sick?</h3>
+                <p class="lang-fr">Je m'organise avec vous pour l'emmener chez son vétérinaire. Les frais de vétérinaire et de déplacement seront avancés mais à votre charge (je vous enverrais la facture qui sera à régler).</p>
+                <p class="lang-en">I will coordinate with you to take them to their vet. Veterinary and travel expenses will be advanced but are your responsibility (I will send you the invoice for reimbursement).</p>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="lang-fr">Si mon chat a un traitement, comment cela se passe ?</h3>
+                <h3 class="lang-en">What happens if my cat needs medication?</h3>
+                <p class="lang-fr">Je m'occupe des administrations de médicaments oraux mais non cutané (piqûres). Il me faudra l'ordonnance datée à l'appui.</p>
+                <p class="lang-en">I handle oral medication administration but not injections. I will need a copy of a dated prescription.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="lang-fr">Pouvez-vous couper les griffes de mon chat ?</h3>
+                <h3 class="lang-en">Can you trim my cat's claws?</h3>
+                <p class="lang-fr">Je ne propose pas ce service. Je vous laisse le soin de le faire avant votre départ. Pour la sécurité de votre chat et la mienne. Je préfère limiter les moments de stress de votre chat lors de ma visite.</p>
+                <p class="lang-en">I do not offer this service. Please take care of it before you leave. For your cat's safety and mine, I prefer to minimize stressful moments for your cat during my visits.</p>
+            </div>
+        </section>
+
+        <section class="contact-section">
+            <img src="mymy.jpeg" alt="Lucie avec mymy" class="hero-img">
+            <h2 class="lang-fr">Contact</h2>
+            <h2 class="lang-en">Contact Me</h2>
+            <div class="faq-item">
+                <h3 class="lang-fr">Prêt(e) à réserver le séjour ou des questions ?</h3>
+                <h3 class="lang-en">Ready to book a stay or have questions?</h3>
+                <p class="lang-fr">Écrivez-moi à <a href="mailto:pawandronrons@gmail.com" class="contact-link">pawandronrons@gmail.com</a></p>
+                <p class="lang-en">Email me at <a href="mailto:pawandronrons@gmail.com" class="contact-link">pawandronrons@gmail.com</a></p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const langBtn = document.querySelector('.lang-toggle');
+        langBtn.addEventListener('click', () => {
+            document.body.classList.toggle('en');
+        });
+    </script>
+</body>
+</html>

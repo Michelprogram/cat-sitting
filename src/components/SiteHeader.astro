@@ -1,0 +1,27 @@
+---
+import { Image } from "astro:assets";
+import logo from "../assets/logo.png";
+import type { Language } from "../utils/i18n";
+import LanguageSelector from "./LanguageSelector.astro";
+
+
+const language: Record<Language, Record<string, string>> = {
+	fr: {
+		description: "Cat-sitting à domicile",
+	},
+	en: {
+		description: "In-home cat-sitting",
+	},
+}
+
+const currentLanguage = Astro.currentLocale as Language
+---
+
+<header class="p-5 text-center">
+	<div class="flex items-center justify-between">
+		<Image src={logo} alt="Logo Paw & Ronrons" class="h-[50px] w-auto" />
+		<LanguageSelector />
+	</div>
+	<h1 class="mt-4 mb-0.5 text-[26px] font-medium">Paw & Ronrons</h1>
+	<p class="text-[15px] italic">{language[currentLanguage].description}</p>
+</header>

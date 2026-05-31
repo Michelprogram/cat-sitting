@@ -1,0 +1,96 @@
+---
+import { Image } from "astro:assets";
+import shifouImg from "../assets/shifou.jpeg";
+import type { Language } from "../utils/i18n";
+import SectionTitle from "./SectionTitle.astro";
+
+type i18nServices = {
+	title: string;
+	services: {
+		title: string;
+		description: string;
+	}[];
+}
+
+const language: Record<Language, i18nServices> = {
+	fr: {
+		title: "Mes missions",
+		services: [
+			{
+				title: "L'alimentation",
+				description: "Les bols de nourritures sont nettoyées puis remplis en fonction du dosage demandé (croquettes et patées).",
+			},
+			{
+				title: "La litière",
+				description: "A chaque visite, la litière est nettoyée.",
+			},
+			{
+				title: "L'hydratation",
+				description: "Les bols d'eau sont nettoyés chaque jour et remplis en fonction des besoins. Les fontaines à eau tous les 2-3 jours selon leur état.",
+			},
+			{
+				title: "Les petits plus",
+				description: "L'arrosage des plantes et des petits conseils si besoin",
+			}
+		],
+	},
+	en: {
+		title: "My services",
+		services: [
+			{
+				title: "Feeding",
+				description: "Food bowls are cleaned and refilled according to the requested portions (kibble and wet food).",
+			},
+			{
+				title: "Litter box",
+				description: "The litter box is cleaned during every visit.",
+			},
+			{
+				title: "Hydration",
+				description: "Water bowls are cleaned daily and refilled as needed. Water fountains are maintained every 2-3 days depending on their condition.",
+			},
+			{
+				title: "Add",
+				description: "Water bowls are cleaned daily and refilled as needed. Water fountains are maintained every 2-3 days depending on their condition.",
+			}
+		],
+	},
+}
+
+const currentLanguage = Astro.currentLocale as Language
+---
+
+<section class="-mt-5 px-5 pt-[30px] pb-5">
+	<SectionTitle marginTop={false}>{language[currentLanguage].title}</SectionTitle>
+
+	<div
+		class="mx-auto grid aspect-square w-full grid-cols-[1fr_1.6fr_1fr] grid-rows-[1fr_1.6fr_1fr] gap-3"
+	>
+		{
+			language[currentLanguage].services.map((service, index) => {
+				const positions = [
+					"col-start-1 row-start-1 text-left",
+					"col-start-3 row-start-1 text-right",
+					"col-start-3 row-start-3 text-right",
+					"col-start-1 row-start-3 text-left",
+				];
+				return (
+					<div class:list={["self-center", positions[index]]}>
+						<h3 class="mb-[5px] text-[15px] font-medium">{service.title}</h3>
+						<p class="text-[11px] leading-[1.3]">{service.description}</p>
+					</div>
+				);
+			})
+		}
+
+		<div
+			class="col-start-2 row-start-2 h-full w-full overflow-hidden rounded-full shadow-[0_4px_16px_rgba(0,0,0,0.15)]"
+		>
+			<Image
+				src={shifouImg}
+				alt="Mon chat shifou qui pose"
+				class="block h-full w-full object-cover object-center"
+			/>
+		</div>
+	</div>
+</section>

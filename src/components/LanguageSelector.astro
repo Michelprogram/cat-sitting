@@ -1,0 +1,23 @@
+---
+import { languages, type Language } from "../utils/i18n";
+
+const currentLanguage = Astro.currentLocale as Language;
+---
+
+<ul class="flex items-center gap-2">
+  {
+    Object.entries(languages).map(([lang, label]) => (
+      <li>
+        <a
+          href={lang === "en" ? "/" : `/${lang}/`}
+          class:list={[
+            "text-[12px] font-bold",
+            currentLanguage === lang && "underline underline-offset-4",
+          ]}
+        >
+          {label}
+        </a>
+      </li>
+    ))
+  }
+</ul>

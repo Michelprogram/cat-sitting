@@ -1,0 +1,50 @@
+---
+import { Image } from "astro:assets";
+import majorImg from "../assets/major.jpeg";
+import type { Language } from "../utils/i18n";
+import SectionTitle from "./SectionTitle.astro";
+
+const language: Record<Language, { title: string; section: string[] }> = {
+  fr: {
+	title: "Présentation",
+    section: [
+      "Hi! Je m'appelle Lucie, je suis cat-sitter. J'ai acquis en France mon diplôme de l'ACACED et ma formation de comportementaliste félin.",
+      "Que vous partiez en week-end ou en vacances, je vous propose mes services de cat-sitting pour prendre soin de vos compagnons directement dans leur environnement, là où ils se sentent le mieux.",
+      "Grâce à mes différentes expériences professionnelles auprès d'eux (hôtel félin-pension féline, association, étude de cas) je sais m'occuper d'eux et adapter mon comportement face aux différents profils.",
+    ],
+  },
+  en: {
+	title: "Presentation",
+    section: [
+      "Hi! My name is Lucie, I am a cat-sitter. I obtained my ACACED certificate and my feline behaviorist training in France.",
+      "Whether you are going away for a weekend or a vacation, I offer my cat-sitting services to take care of your companions directly in their own environment, where they feel best.",
+      "Thanks to my various professional experiences with them (cat hotel/boarding, shelters, case studies), I know how to care for them and adapt my behavior to different personalities.",
+    ],
+  },
+};
+
+const currentLanguage = Astro.currentLocale as Language;
+---
+
+<section class="px-5 pb-5">
+  <Image
+    src={majorImg}
+    alt="Lucie avec son chat"
+    class="relative h-[220px] w-full rounded-[10px] object-cover"
+  />
+
+<SectionTitle>{language[currentLanguage].title}</SectionTitle>
+
+  <div class="flex flex-col gap-2.5">
+    {language[currentLanguage].section.map((section, index) => (
+      <div
+        class:list={[
+          " rounded-sm mb-[15px] bg-white p-[15px] text-[13px] leading-[1.4] shadow-xl",
+          index % 2 === 0 ? "w-[90%] self-start" : "w-[95%] self-end",
+        ]}
+      >
+        {section}
+      </div>
+    ))}
+  </div>
+</section>

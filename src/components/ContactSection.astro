@@ -1,0 +1,41 @@
+---
+import { Image } from "astro:assets";
+import mymyImg from "../assets/mymy.jpeg";
+import type { Language } from "../utils/i18n";
+import SectionTitle from "./SectionTitle.astro";
+
+const language: Record<Language, Record<string, string>> = {
+  fr: {
+    title: "Contact",
+    subtitle: "Prêt(e) à réserver le séjour ou des questions ?",
+    description: "Écrivez-moi à",
+  },
+  en: {
+    title: "Contact Me",
+    subtitle: "Ready to book a stay or have questions?",
+    description: "Email me at",
+  },
+};
+
+const currentLanguage = Astro.currentLocale as Language;
+---
+
+<section class="pr-5 pl-2.5">
+  <SectionTitle>{language[currentLanguage].title}</SectionTitle>
+  <div class="mb-5">
+    <h3 class="mb-[5px] text-[15px] font-bold">
+      {language[currentLanguage].subtitle}
+    </h3>
+    <p class="text-[12px] leading-[1.4]">
+      {language[currentLanguage].description}
+      <a href="mailto:pawandronrons@gmail.com" class="font-bold underline"
+        >pawandronrons@gmail.com</a
+      >
+    </p>
+  </div>
+    <Image
+    src={mymyImg}
+    alt="Lucie avec mymy"
+    class="relative h-[220px] w-full rounded-xl object-cover"
+  />
+</section>
